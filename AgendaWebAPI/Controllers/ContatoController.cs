@@ -15,8 +15,7 @@ namespace AgendaWebAPI.Controllers
         {
             _repo = repository;
         }
-
-        // api/contato      [Retorna todos os contatos]
+        
         [HttpGet]
         public async Task<IActionResult> Get()
         {

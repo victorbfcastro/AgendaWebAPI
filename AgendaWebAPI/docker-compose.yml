@@ -10,11 +10,11 @@ networks:
 services:
   mysql:
     image: "mysql:latest"
-    container_name: agendawebapi
+    container_name: mysql
     ports:
       - "3307:3306"
     volumes:
-      - AgendaDb:/var/lib/mysql
+      - "AgendaDb:/var/lib/mysql"
     networks: 
       - mysql_agendaNET
     environment: 
@@ -35,6 +35,6 @@ services:
     ports: 
         - 5000:80
     environment:
-      - DBHOST=mysql
+      - DBHost=mysql
     depends_on:
       - mysql
