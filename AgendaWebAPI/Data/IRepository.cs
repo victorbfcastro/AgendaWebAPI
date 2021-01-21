@@ -18,7 +18,8 @@ namespace AgendaWebAPI.Data
 
         // MÉTODOS EVENTOS
         Task<Evento[]> GetAllEventos(bool includeContato = false);    //TODO includeContato
-        Task<Evento> GetEventoById(int eventoId, bool includeContato = false);    //TODO includeEvento
+        Evento GetEventoById(int eventoId, bool includeContato = false);    //TODO includeEvento
+        Task<Evento> GetEventoByIdAsync(int eventoId, bool includeContato = false);
         Task<Evento[]> GetAllEventosByContatoId(int contatoId);
 
     }

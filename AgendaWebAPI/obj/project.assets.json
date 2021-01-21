@@ -1613,11 +1613,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\victo\\source\\repos\\AgendaWebAPI\\AgendaWebAPI\\AgendaWebAPI.csproj",
+      "projectUniqueName": "c:\\Users\\victo\\source\\repos\\AgendaWebAPI\\AgendaWebAPI\\AgendaWebAPI.csproj",
       "projectName": "AgendaWebAPI",
-      "projectPath": "C:\\Users\\victo\\source\\repos\\AgendaWebAPI\\AgendaWebAPI\\AgendaWebAPI.csproj",
+      "projectPath": "c:\\Users\\victo\\source\\repos\\AgendaWebAPI\\AgendaWebAPI\\AgendaWebAPI.csproj",
       "packagesPath": "C:\\Users\\victo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\victo\\source\\repos\\AgendaWebAPI\\AgendaWebAPI\\obj\\",
+      "outputPath": "c:\\Users\\victo\\source\\repos\\AgendaWebAPI\\AgendaWebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",

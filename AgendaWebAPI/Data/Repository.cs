@@ -103,7 +103,23 @@ namespace AgendaWebAPI.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Evento> GetEventoById(int eventoId, bool includeContato = false)
+        public Evento GetEventoById(int eventoId, bool includeContato = false)
+        {
+            IQueryable<Evento> query = _context.Eventos;
+
+            if (includeContato)
+            {
+                query = query.Include(pe => pe.PessoasEventos)
+                             .ThenInclude(e => e.Contato);
+            }
+
+            query = query.AsNoTracking()
+                         .Where(e => e.Id == eventoId);
+
+            return query.FirstOrDefault();
+        }
+
+        public async Task<Evento> GetEventoByIdAsync(int eventoId, bool includeContato = false)
         {
             IQueryable<Evento> query = _context.Eventos;
 

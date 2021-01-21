@@ -50,3 +50,4 @@ C:\Users\victo\source\repos\AgendaWebAPI\AgendaWebAPI\bin\Debug\net5.0\Newtonsof
 C:\Users\victo\source\repos\AgendaWebAPI\AgendaWebAPI\bin\Debug\net5.0\MySqlConnector.dll
 C:\Users\victo\source\repos\AgendaWebAPI\AgendaWebAPI\bin\Debug\net5.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\victo\source\repos\AgendaWebAPI\AgendaWebAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\victo\source\repos\AgendaWebAPI\AgendaWebAPI\bin\Debug\net5.0\AgendaWebAPI.xml

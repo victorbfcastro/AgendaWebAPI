@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 using AgendaWebAPI.Data;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace AgendaWebAPI
@@ -30,19 +26,47 @@ namespace AgendaWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             string MySqlConnection = Configuration.GetConnectionString("MySqlConnection");
-            
-            services.AddDbContextPool<AgendaContext>( DbContextOptions => DbContextOptions
-                    .UseMySql(MySqlConnection, new MySqlServerVersion(new Version(8, 0, 23)), 
-                    mySqlOptions => mySqlOptions.CharSetBehavior(CharSetBehavior.NeverAppend).EnableRetryOnFailure()));
+
+            services.AddDbContextPool<AgendaContext>(DbContextOptions => DbContextOptions
+                   .UseMySql(MySqlConnection, new MySqlServerVersion(new Version(8, 0, 23)),
+                   mySqlOptions => mySqlOptions.CharSetBehavior(CharSetBehavior.NeverAppend).EnableRetryOnFailure()));
 
             services.AddScoped<IRepository, Repository>();
 
-            services.AddControllers();
-            
-            services.AddSwaggerGen(c =>
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AgendaWebAPI", Version = "v1" });
-            });
+                options.SwaggerDoc(
+                "v1",
+                new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Agenda WebAPI",
+                    Version = "v1",
+                    TermsOfService = new Uri("http://SeusTermosdeUso.com"),
+                    Description = "WebAPI de Agenda com métodos HTTP para Contatos e Eventos",
+                    License = new Microsoft.OpenApi.Models.OpenApiLicense
+                    {
+                        Name = "AgendaWebAPI License",
+                        Url = new Uri("http://mit.com")
+                    },
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                    {
+                        Name = "Victor Castro",
+                        Url = new Uri("https://github.com/victorbfcastro")
+                    }
+                }
+            );
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
+                options.IncludeXmlComments(xmlCommentsFullPath);
+
+            }
+         );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,10 +75,18 @@ namespace AgendaWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AgendaWebAPI v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AgendaWebAPI v1"));
             }
 
+            app.UseSwagger()
+            .UseSwaggerUI(options =>
+            {
+
+                options.SwaggerEndpoint($"/swagger/v1/swagger.json", "v1");
+
+                options.RoutePrefix = "";
+            });
             //app.UseHttpsRedirection();
 
             app.UseRouting();
